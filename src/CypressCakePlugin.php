@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tyler36\Cypress;
+namespace Tyler36\CypressCake;
 
 use Cake\Core\BasePlugin;
 use Cake\Core\ContainerInterface;
@@ -10,9 +10,9 @@ use Cake\Http\MiddlewareQueue;
 use Cake\Routing\RouteBuilder;
 
 /**
- * Plugin for Cypress
+ * Plugin for CypressCake
  */
-class CypressPlugin extends BasePlugin
+class CypressCakePlugin extends BasePlugin
 {
     /**
      * Load all the plugin configuration and bootstrap logic.
@@ -39,26 +39,26 @@ class CypressPlugin extends BasePlugin
     public function routes(RouteBuilder $routes): void
     {
         $routes->plugin(
-            'Tyler36/Cypress',
+            'Tyler36/CypressCake',
             ['path' => '/cypress'],
             function (RouteBuilder $builder): void {
                 $builder->get(
                     '/clear-database',
-                    ['controller' => 'Cypress','action' => 'clearDatabase'],
+                    ['controller' => 'CypressCake','action' => 'clearDatabase'],
                     'cypress-cake.clear-database'
                 );
                 $builder->post(
                     '/restore-database',
-                    ['controller' => 'Cypress', 'action' => 'restoreDatabase'],
+                    ['controller' => 'CypressCake', 'action' => 'restoreDatabase'],
                     'cypress-cake.restore-database'
                 );
                 $builder->get(
                     '/csrf-token',
-                    ['controller' => 'Cypress', 'action' => 'csrfToken'],
+                    ['controller' => 'CypressCake', 'action' => 'csrfToken'],
                     'cypress-cake.csrf-token',
                 );
-                $builder->post('/add', ['controller' => 'Cypress', 'action' => 'add'], 'cypress-cake.add');
-                $builder->post('/cake', ['controller' => 'Cypress', 'action' => 'cake'], 'cypress-cake.cake');
+                $builder->post('/add', ['controller' => 'CypressCake', 'action' => 'add'], 'cypress-cake.add');
+                $builder->post('/cake', ['controller' => 'CypressCake', 'action' => 'cake'], 'cypress-cake.cake');
             }
         );
         parent::routes($routes);

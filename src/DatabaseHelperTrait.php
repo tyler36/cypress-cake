@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tyler36\Cypress;
+namespace Tyler36\CypressCake;
 
 use Cake\Datasource\ConnectionManager;
 
