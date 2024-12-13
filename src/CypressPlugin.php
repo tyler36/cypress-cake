@@ -61,8 +61,6 @@ class CypressPlugin extends BasePlugin
                 );
                 $builder->post('/add', ['controller' => 'Cypress', 'action' => 'add'], 'cypress.add');
                 $builder->post('/cake', ['controller' => 'Cypress', 'action' => 'cake'], 'cypress.cake');
-
-                $builder->fallbacks();
             }
         );
         parent::routes($routes);
