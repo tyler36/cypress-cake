@@ -23,7 +23,7 @@ teardown() {
 }
 
 setupCakePhp() {
-  ddev config --project-type=cakephp --docroot=webroot
+  ddev config --project-type=cakephp --docroot=webroot --php-version=8.1
   ddev composer create --prefer-dist --no-interaction cakephp/app:~5.0
 }
 
