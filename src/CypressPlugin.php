@@ -44,23 +44,21 @@ class CypressPlugin extends BasePlugin
             function (RouteBuilder $builder): void {
                 $builder->get(
                     '/clear-database',
-                    [
-                    'controller' => 'Cypress',
-                    'action' => 'clearDatabase'],
-                    'cypress.clear-database'
+                    ['controller' => 'Cypress','action' => 'clearDatabase'],
+                    'cypress-cake.clear-database'
                 );
                 $builder->post(
                     '/restore-database',
                     ['controller' => 'Cypress', 'action' => 'restoreDatabase'],
-                    'cypress.restore-database'
+                    'cypress-cake.restore-database'
                 );
                 $builder->get(
-                    template: '/csrf-token',
-                    target: ['controller' => 'Cypress', 'action' => 'csrfToken', 'cypress.csrf-token'],
-                    name: 'cypress.csrf-token',
+                    '/csrf-token',
+                    ['controller' => 'Cypress', 'action' => 'csrfToken'],
+                    'cypress-cake.csrf-token',
                 );
-                $builder->post('/add', ['controller' => 'Cypress', 'action' => 'add'], 'cypress.add');
-                $builder->post('/cake', ['controller' => 'Cypress', 'action' => 'cake'], 'cypress.cake');
+                $builder->post('/add', ['controller' => 'Cypress', 'action' => 'add'], 'cypress-cake.add');
+                $builder->post('/cake', ['controller' => 'Cypress', 'action' => 'cake'], 'cypress-cake.cake');
             }
         );
         parent::routes($routes);
