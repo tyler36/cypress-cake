@@ -27,9 +27,11 @@ class CypressCakeController extends AppController
         parent::beforeFilter($event);
 
         // Disable default authentication.
-        $this->Authentication->allowUnauthenticated([
-            'restoreDatabase', 'clearDatabase', 'csrfToken', 'add', 'cake',
-        ]);
+        if (isset($this->Authentication)) {
+            $this->Authentication->allowUnauthenticated([
+                'restoreDatabase', 'clearDatabase', 'csrfToken', 'add', 'cake',
+            ]);
+        }
 
         // Do NOT try to autoload a view.
         $this->autoRender = false;

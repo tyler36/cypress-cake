@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tyler36\CypressCake\Test\Factory;
+namespace App\Test\Factory;
 
 use CakephpFixtureFactories\Factory\BaseFactory as CakephpBaseFactory;
 use Faker\Generator;
