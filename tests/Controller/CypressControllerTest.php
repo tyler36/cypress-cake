@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Tyler36\Cypress\Tests\Controller;
+namespace Tyler36\CypressCake\Tests\Controller;
 
 use App\Test\Factory\UserFactory;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
-use Tyler36\Cypress\DatabaseHelperTrait;
+use Tyler36\CypressCake\DatabaseHelperTrait;
 
 /**
  * Class CypressControllerTest.
@@ -163,7 +163,7 @@ class CypressControllerTest extends TestCase
 
         $response = $this->_getBodyAsString();
         $this->assertStringContainsString('Route name', $response);
-        $this->assertStringContainsString('cypress.cake', $response);
+        $this->assertStringContainsString('cypress-cake.cake', $response);
     }
 
     public function test_it_can_return_a_valid_csrf_token(): void

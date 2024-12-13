@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Tyler36\Cypress\Controller;
+namespace Tyler36\CypressCake\Controller;
 
 use App\Controller\AppController;
 use Cake\Datasource\ConnectionManager;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
 use InvalidArgumentException;
-use Tyler36\Cypress\DatabaseHelperTrait;
+use Tyler36\CypressCake\DatabaseHelperTrait;
 
 /**
  * Class CypressController.
  */
-class CypressController extends AppController
+class CypressCakeController extends AppController
 {
     use DatabaseHelperTrait;
 
@@ -27,9 +27,11 @@ class CypressController extends AppController
         parent::beforeFilter($event);
 
         // Disable default authentication.
-        $this->Authentication->allowUnauthenticated([
-            'restoreDatabase', 'clearDatabase', 'csrfToken', 'add', 'cake',
-        ]);
+        if (isset($this->Authentication)) {
+            $this->Authentication->allowUnauthenticated([
+                'restoreDatabase', 'clearDatabase', 'csrfToken', 'add', 'cake',
+            ]);
+        }
 
         // Do NOT try to autoload a view.
         $this->autoRender = false;
