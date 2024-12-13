@@ -44,5 +44,5 @@ setupCakePhp() {
   ddev cake plugin load Tyler36/CypressCake
 
   # Run PHPunit tests
-  ddev phpunit
+  ddev exec vendor/bin/phpunit
 }
