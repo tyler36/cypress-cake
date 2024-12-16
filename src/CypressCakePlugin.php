@@ -57,7 +57,7 @@ class CypressCakePlugin extends BasePlugin
                     ['controller' => 'CypressCake', 'action' => 'csrfToken'],
                     'cypress-cake.csrf-token',
                 );
-                $builder->post('/add', ['controller' => 'CypressCake', 'action' => 'add'], 'cypress-cake.add');
+                $builder->post('/create', ['controller' => 'CypressCake', 'action' => 'create'], 'cypress-cake.create');
                 $builder->post('/cake', ['controller' => 'CypressCake', 'action' => 'cake'], 'cypress-cake.cake');
             }
         );
