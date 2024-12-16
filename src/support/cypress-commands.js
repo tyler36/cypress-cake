@@ -101,3 +101,37 @@ Cypress.Commands.add('create', (params, attributes) => {
       })
   })
 })
+
+/**
+ * Run arbitrary CakePHP commands
+ *
+ * @param {String} coomand
+ *
+ * @example
+ * cy.cake('routes')
+ */
+Cypress.Commands.add('cake', (params, attributes) => {
+  if (typeof params === 'string') {
+    params = { command: params }
+  }
+
+  return cy.getCsrfToken().then((csrfToken) => {
+    return cy
+      .request({
+        method: 'POST',
+        url: '/cypress/cake',
+        body: params,
+        log: true,
+        headers: {
+          'X-CSRF-Token': csrfToken,
+        },
+      })
+      .then((response) => {
+        Cypress.log({
+          name: 'cake',
+          message: response.body,
+          consoleProps: () => response.body,
+        })
+      })
+  })
+})

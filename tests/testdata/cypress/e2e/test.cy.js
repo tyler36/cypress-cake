@@ -30,4 +30,18 @@ describe('Cypress-cake', () => {
     cy.visit('/users')
     cy.get('table').should('contain', email)
   })
+
+  it('runs cake commands', () => {
+      cy.cake('cache clear_all').then((response) => {
+        expect(response.status).to.equal(200)
+        expect(response.body.data).to.contain('Clearing default')
+      })
+
+    cy.cake('migrations migrate').then((response) => {
+      expect(response.status).to.equal(200)
+      expect(response.body.data).to.contain(
+          '/var/www/html/config/Migrations',
+      )
+    })
+  })
 })
