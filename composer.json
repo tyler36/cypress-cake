@@ -19,5 +19,11 @@
             "Tyler36\\CypressCake\\Test\\": "tests/",
             "Cake\\Test\\": "vendor/cakephp/cakephp/tests/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:tyler36/cypress-support.git"
+        }
+    ]
 }
