@@ -46,3 +46,34 @@ setupCakePhp() {
   # Run PHPunit tests
   ddev exec vendor/bin/phpunit
 }
+
+@test "runs cypress tests" {
+  set -eu -o pipefail
+
+  cd ${TESTDIR}
+
+  # Setup CakePHP
+  setupCakePhp
+
+  # Copy additional settings for PHPunit environment
+  cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
+  ddev cake migrations migrate
+
+  # Install cypress-cake by setting the preferred path and installing it from there.
+  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
+  composer require tyler36/cypress-cake
+
+  # Copy additional settings for PHPunit environment
+  cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
+  ddev cake plugin load Tyler36/CypressCake
+
+  ddev addon get tyler36/ddev-cypress
+  ddev restart
+
+  # Create a database file to restore in Cypress test.
+  echo "INSERT INTO users VALUES (1187404954,'now@example.com','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');" > tests/backup.sql
+  ddev exec cp tests/backup.sql /tmp/test.sql
+
+  echo "import '../../vendor/tyler36/cypress-cake/src/support/cypress-commands'" > cypress/support/commands.js
+  ddev cypress-run | grep 'All specs passed'
+}
