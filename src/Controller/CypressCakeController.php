@@ -29,7 +29,7 @@ class CypressCakeController extends AppController
         // Disable default authentication.
         if (isset($this->Authentication)) {
             $this->Authentication->allowUnauthenticated([
-                'restoreDatabase', 'clearDatabase', 'csrfToken', 'add', 'cake',
+                'importDatabase', 'clearDatabase', 'csrfToken', 'add', 'cake',
             ]);
         }
 
@@ -52,12 +52,12 @@ class CypressCakeController extends AppController
     }
 
     /**
-     * Restore database from 'filename' or env('SQL_TESTING_BASE_DUMP')
+     * Import database from 'filename' or env('SQL_TESTING_BASE_DUMP')
      * Paths are relative to project root.
      *
      * @return \Cake\Http\Response
      */
-    public function restoreDatabase(): Response
+    public function importDatabase(): Response
     {
         $filename = strval($this->getRequest()->getData('filename') ?? env('SQL_TESTING_BASE_DUMP'));
         if (!$filename) {

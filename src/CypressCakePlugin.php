@@ -48,9 +48,9 @@ class CypressCakePlugin extends BasePlugin
                     'cypress-cake.clear-database'
                 );
                 $builder->post(
-                    '/restore-database',
-                    ['controller' => 'CypressCake', 'action' => 'restoreDatabase'],
-                    'cypress-cake.restore-database'
+                    '/import-database',
+                    ['controller' => 'CypressCake', 'action' => 'importDatabase'],
+                    'cypress-cake.import-database'
                 );
                 $builder->get(
                     '/csrf-token',

@@ -57,7 +57,7 @@ class CypressControllerTest extends TestCase
         $this->assertCount(0, $users->find()->where(['email' => $email]));
 
         $this->enableCsrfToken();
-        $this->post('/cypress/restore-database');
+        $this->post('/cypress/import-database');
         $this->assertResponseOk();
         $this->assertCount(1, $users->find()->where(['email' => $email]));
 
@@ -77,7 +77,7 @@ class CypressControllerTest extends TestCase
         $this->assertCount(0, $users->find()->where(['email' => $email]));
 
         $this->enableCsrfToken();
-        $this->post('/cypress/restore-database', ['filename' => $file]);
+        $this->post('/cypress/import-database', ['filename' => $file]);
         $this->assertResponseOk();
         $this->assertCount(1, $users->find()->where(['email' => $email]));
 
@@ -93,7 +93,7 @@ class CypressControllerTest extends TestCase
         $this->expectExceptionMessage("DB filename is invalid: ''");
 
         $this->enableCsrfToken();
-        $this->post('/cypress/restore-database', ['filename' => '']);
+        $this->post('/cypress/import-database', ['filename' => '']);
     }
 
     public function test_it_throws_an_error_if_database_file_is_missing(): void
@@ -103,7 +103,7 @@ class CypressControllerTest extends TestCase
         $this->expectExceptionMessage("DB backup file not found: 'invalid'");
 
         $this->enableCsrfToken();
-        $this->post('/cypress/restore-database', ['filename' => 'invalid']);
+        $this->post('/cypress/import-database', ['filename' => 'invalid']);
     }
 
     public function test_it_can_create_a_entity(): void
