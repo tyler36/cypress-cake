@@ -34,15 +34,15 @@ Cypress.Commands.add('clearDatabase', (params) => {
  * Restore database
  *
  * @example
- * cy.restoreDatabase()
- * cy.restoreDatabase('tests/example.sql')
+ * cy.importDatabase()
+ * cy.importDatabase('tests/example.sql')
  */
-Cypress.Commands.add('restoreDatabase', (filename) => {
+Cypress.Commands.add('importDatabase', (filename) => {
   return cy.getCsrfToken().then((csrfToken) => {
     return cy
       .request({
         method: 'POST',
-        url: '/cypress/restore-database',
+        url: '/cypress/import-database',
         body: { filename: filename },
         log: true,
         headers: {

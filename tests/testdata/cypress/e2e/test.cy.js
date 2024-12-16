@@ -10,7 +10,7 @@ describe('Cypress-cake', () => {
      * This test will fail if the file does not exist. Because we are running in a browser environment, we don't have
      * access to the filesystem to dynamically create the file. We create it in the BATS test.
      */
-    cy.restoreDatabase('/tmp/test.sql')
+    cy.importDatabase('/tmp/test.sql')
 
     cy.visit('/users')
     cy.get('table').should('contain', 'now@example.com')
