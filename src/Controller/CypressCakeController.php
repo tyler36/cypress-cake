@@ -85,7 +85,7 @@ class CypressCakeController extends AppController
      *
      * @return \Cake\Http\Response
      */
-    public function add(): Response
+    public function create(): Response
     {
         $data = $this->getRequest()->getData();
 

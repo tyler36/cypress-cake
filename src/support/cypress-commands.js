@@ -75,7 +75,7 @@ Cypress.Commands.add('getCsrfToken', (params) => {
  * cy.create('User')
  * cy.create('User', {email: 'example@example.com'})
  */
-Cypress.Commands.add('add', (params, attributes) => {
+Cypress.Commands.add('create', (params, attributes) => {
   if (typeof params === 'string') {
     params = { factory: params }
     params.attributes = attributes
@@ -85,7 +85,7 @@ Cypress.Commands.add('add', (params, attributes) => {
     return cy
       .request({
         method: 'POST',
-        url: '/cypress/add',
+        url: '/cypress/create',
         body: params,
         log: true,
         headers: {

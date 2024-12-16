@@ -112,7 +112,7 @@ class CypressControllerTest extends TestCase
         $this->assertCount(0, $users->find());
 
         $this->enableCsrfToken();
-        $this->post('/cypress/add', [
+        $this->post('/cypress/create', [
           'factory' => 'User',
         ]);
         $this->assertResponseOk();
@@ -129,7 +129,7 @@ class CypressControllerTest extends TestCase
         $userCount = $users->find()->count();
 
         $this->enableCsrfToken();
-        $this->post('/cypress/add', [
+        $this->post('/cypress/create', [
           'factory' => 'User',
           'attributes' => ['email' => $email = 'foobar@example.com'],
         ]);
@@ -147,7 +147,7 @@ class CypressControllerTest extends TestCase
     public function test_it_throws_an_exception_if_the_factory_does_not_exist(): void
     {
         $this->enableCsrfToken();
-        $this->post('/cypress/add', [
+        $this->post('/cypress/create', [
           'factory' => 'FooBar',
         ]);
         $this->assertResponseCode(400);
