@@ -19,7 +19,7 @@ teardown() {
 
   cd ${TESTDIR} || (printf "unable to cd to ${TESTDIR}\n" && exit 1)
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
-  [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
+  # [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
 }
 
 setupCakePhp() {
@@ -75,5 +75,41 @@ setupCakePhp() {
   ddev exec cp tests/backup.sql /tmp/test.sql
 
   echo "import '../../vendor/tyler36/cypress-cake/src/support/cypress-commands'" > cypress/support/commands.js
+  ddev cypress-run | grep 'All specs passed'
+}
+
+@test "step definitions function" {
+  set -eu -o pipefail
+
+  cd ${TESTDIR}
+
+  # Setup CakePHP
+  setupCakePhp
+
+  # Copy additional settings for PHPunit environment
+  cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
+  ddev cake migrations migrate
+
+    # Install cypress-cake by setting the preferred path and installing it from there.
+  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
+  composer require tyler36/cypress-cake
+
+  ddev addon get tyler36/ddev-cypress
+  ddev restart
+
+  # Create a database file to restore in Cypress test.
+  echo "INSERT INTO users VALUES (1187404954,'now@example.com','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');" > tests/backup.sql
+  ddev exec cp tests/backup.sql /tmp/test.sql
+  echo "import '../../vendor/tyler36/cypress-cake/src/support/cypress-commands'" > cypress/support/commands.js
+
+  # # Install Cucumber
+  npm install @badeball/cypress-cucumber-preprocessor @bahmutov/cypress-esbuild-preprocessor --save-dev
+
+  # Update configuration for Cucumber.
+  mv cypress.config.js cypress.config.js.old
+  mv cucumber.config.ts cypress.config.ts
+  # Remove `type: module` from `package.json`
+  sed -i '/"module"/d' package.json
+
   ddev cypress-run | grep 'All specs passed'
 }
