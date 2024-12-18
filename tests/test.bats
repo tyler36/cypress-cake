@@ -37,13 +37,38 @@ setupCakePhp() {
 
   # Install cypress-cake by setting the preferred path and installing it from there.
   composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
-  composer require tyler36/cypress-cake
+  composer require tyler36/cypress-cake --ignore-platform-reqs
 
   # Copy additional settings for PHPunit environment
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
   ddev cake plugin load Tyler36/CypressCake
 
   # Run PHPunit tests
+  ddev exec vendor/bin/phpunit
+}
+
+@test "runs phpunit tests on cakephp4" {
+  set -eu -o pipefail
+
+  cd ${TESTDIR}
+
+  # Setup CakePHP
+  ddev config --project-type=cakephp --docroot=webroot --php-version=7.4
+  ddev composer create --prefer-dist --no-interaction cakephp/app:~4.0
+
+  # Install cypress-cake by setting the preferred path and installing it from there.
+  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
+  composer require tyler36/cypress-cake --ignore-platform-reqs
+
+  # Copy additional settings for PHPunit environment
+  cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
+  ddev cake plugin load Tyler36/CypressCake
+
+  # Explicitly run migrations
+  ddev cake migrations migrate
+
+  # Downgrade PHPunit config for legacy environment. Also ignore deprecations.
+  mv phpunit9.xml phpunit.xml.dist
   ddev exec vendor/bin/phpunit
 }
 

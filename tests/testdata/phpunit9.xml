@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         colors="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         bootstrap="tests/bootstrap.php"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd">
+    <php>
+        <ini name="memory_limit" value="-1"/>
+        <ini name="apc.enable_cli" value="1"/>
+        <!-- Disable deprecations -->
+        <ini name="error_reporting" value="E_ALL &amp; E_USER_DEPRECATED" />
+    </php>
+
+    <!-- Add any additional test suites you want to run here -->
+    <testsuites>
+        <testsuite name="app">
+            <directory>tests/TestCase/</directory>
+        </testsuite>
+        <testsuite name="cypress-cake">
+            <directory>vendor/tyler36/cypress-cake/tests</directory>
+        </testsuite>
+        <!-- Add plugin test suites here. -->
+    </testsuites>
+
+</phpunit>
