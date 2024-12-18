@@ -58,7 +58,7 @@ setupCakePhp() {
 
   # Install cypress-cake by setting the preferred path and installing it from there.
   composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
-  composer require tyler36/cypress-cake
+  composer require tyler36/cypress-cake --ignore-platform-reqs
 
   # Copy additional settings for PHPunit environment
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
