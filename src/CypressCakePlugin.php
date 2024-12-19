@@ -59,9 +59,10 @@ class CypressCakePlugin extends BasePlugin
                 );
                 $builder->post('/create', ['controller' => 'CypressCake', 'action' => 'create'], 'cypress-cake.create');
                 $builder->post('/cake', ['controller' => 'CypressCake', 'action' => 'cake'], 'cypress-cake.cake');
+
+                $builder->fallbacks();
             }
         );
-        parent::routes($routes);
     }
 
     /**
