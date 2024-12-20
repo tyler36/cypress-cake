@@ -50,7 +50,7 @@ class CypressControllerTest extends TestCase
 
         // Make sure the default ENV value is set and populated.
         $_ENV['SQL_TESTING_BASE_DUMP'] = '/tmp/test-base.sql';
-        $sql = "INSERT INTO `users` VALUES (1187404954,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');";
+        $sql = "INSERT INTO users VALUES (1187404954,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');";
         file_put_contents($_ENV['SQL_TESTING_BASE_DUMP'], $sql);
 
         $users = TableRegistry::getTableLocator()->get('Users');
@@ -69,7 +69,7 @@ class CypressControllerTest extends TestCase
     public function test_it_restores_database_from_named_backup(): void
     {
         $email = 'bob@example.com';
-        $sql = "INSERT INTO `users` VALUES (1187404954,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');";
+        $sql = "INSERT INTO users VALUES (1187404954,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');";
         $file = '/tmp/fake.sql';
         file_put_contents($file, $sql);
 
