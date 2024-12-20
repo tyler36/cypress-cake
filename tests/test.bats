@@ -27,7 +27,7 @@ setupCakePhp() {
   ddev composer create --prefer-dist --no-interaction cakephp/app:~5.0
 }
 
-@test "runs phpunit tests against MySQL database" {
+@test "CakePhp5 phpunit with MySQL database" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
@@ -48,7 +48,7 @@ setupCakePhp() {
   ddev exec vendor/bin/phpunit
 }
 
-@test "runs phpunit tests on cakephp4" {
+@test "CakePhp4 phpunit with Sqlite database" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
@@ -73,7 +73,7 @@ setupCakePhp() {
   ddev exec vendor/bin/phpunit
 }
 
-@test "runs phpunit tests against Postgres database" {
+@test "CakePhp5 phpunit with Postgres database" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
@@ -98,7 +98,7 @@ setupCakePhp() {
   ddev exec vendor/bin/phpunit
 }
 
-@test "runs cypress tests" {
+@test "headless cypress" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
