@@ -27,13 +27,14 @@ setupCakePhp() {
   ddev composer create --prefer-dist --no-interaction cakephp/app:~5.0
 }
 
-@test "runs phpunit tests" {
+@test "runs phpunit tests against MySQL database" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
 
   # Setup CakePHP
   setupCakePhp
+  sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="mysql://db:db@db/db"|' config/.env
 
   # Install cypress-cake by setting the preferred path and installing it from there.
   composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
