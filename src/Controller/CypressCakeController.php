@@ -78,14 +78,8 @@ class CypressCakeController extends AppController
         /** @var \Cake\Database\Connection $connection */
         $connection = ConnectionManager::get('default');
         if (self::isPostgres($connection)) {
-            $statements = explode(';', $sql);
-
-            foreach ($statements as $statement) {
-                $statement = trim($statement);
-                if (!empty($statement)) {
-                    $connection->execute($statement);
-                }
-            }
+            $db = $connection->config()['host'];
+            `psql $db < $filename`;
         }
 
         if (!self::isPostgres($connection)) {

@@ -52,6 +52,7 @@ class CypressControllerTest extends TestCase
         $_ENV['SQL_TESTING_BASE_DUMP'] = '/tmp/test-base.sql';
         $sql = <<<SQL
 INSERT INTO users VALUES (1234,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
+-- Example comment line;
 INSERT INTO users VALUES (5678,'rob{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
 SQL;
         file_put_contents($_ENV['SQL_TESTING_BASE_DUMP'], $sql);
@@ -75,6 +76,7 @@ SQL;
         $email = 'bob@example.com';
         $sql = <<<SQL
 INSERT INTO users VALUES (1234,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
+-- Example comment line;
 INSERT INTO users VALUES (5678,'rob{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
 SQL;
         $file = '/tmp/fake.sql';
