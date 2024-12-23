@@ -50,7 +50,11 @@ class CypressControllerTest extends TestCase
 
         // Make sure the default ENV value is set and populated.
         $_ENV['SQL_TESTING_BASE_DUMP'] = '/tmp/test-base.sql';
-        $sql = "INSERT INTO `users` VALUES (1187404954,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');";
+        $sql = <<<SQL
+INSERT INTO users VALUES (1234,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
+-- Example comment line;
+INSERT INTO users VALUES (5678,'rob{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
+SQL;
         file_put_contents($_ENV['SQL_TESTING_BASE_DUMP'], $sql);
 
         $users = TableRegistry::getTableLocator()->get('Users');
@@ -59,7 +63,8 @@ class CypressControllerTest extends TestCase
         $this->enableCsrfToken();
         $this->post('/cypress/import-database');
         $this->assertResponseOk();
-        $this->assertCount(1, $users->find()->where(['email' => $email]));
+        $this->assertCount(2, $users = $users->find());
+        $this->assertEquals($email, $users->first()->email);
 
         // ASSERT response contains model.
         $response = json_decode($this->_getBodyAsString());
@@ -69,7 +74,11 @@ class CypressControllerTest extends TestCase
     public function test_it_restores_database_from_named_backup(): void
     {
         $email = 'bob@example.com';
-        $sql = "INSERT INTO `users` VALUES (1187404954,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');";
+        $sql = <<<SQL
+INSERT INTO users VALUES (1234,'{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
+-- Example comment line;
+INSERT INTO users VALUES (5678,'rob{$email}','invalid','2024-02-25 09:31:03','2024-06-27 06:34:41');
+SQL;
         $file = '/tmp/fake.sql';
         file_put_contents($file, $sql);
 
@@ -79,7 +88,8 @@ class CypressControllerTest extends TestCase
         $this->enableCsrfToken();
         $this->post('/cypress/import-database', ['filename' => $file]);
         $this->assertResponseOk();
-        $this->assertCount(1, $users->find()->where(['email' => $email]));
+        $this->assertCount(2, $users = $users->find());
+        $this->assertEquals($email, $users->first()->email);
 
         if (file_exists($file)) {
             unlink($file);

@@ -27,13 +27,14 @@ setupCakePhp() {
   ddev composer create --prefer-dist --no-interaction cakephp/app:~5.0
 }
 
-@test "runs phpunit tests" {
+@test "CakePhp5 phpunit with MySQL database" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
 
   # Setup CakePHP
   setupCakePhp
+  sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="mysql://db:db@db/db"|' config/.env
 
   # Install cypress-cake by setting the preferred path and installing it from there.
   composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
@@ -47,7 +48,7 @@ setupCakePhp() {
   ddev exec vendor/bin/phpunit
 }
 
-@test "runs phpunit tests on cakephp4" {
+@test "CakePhp4 phpunit with Sqlite database" {
   set -eu -o pipefail
 
   cd ${TESTDIR}
@@ -72,7 +73,32 @@ setupCakePhp() {
   ddev exec vendor/bin/phpunit
 }
 
-@test "runs cypress tests" {
+@test "CakePhp5 phpunit with Postgres database" {
+  set -eu -o pipefail
+
+  cd ${TESTDIR}
+
+  # Setup CakePHP
+  ddev config --project-type=cakephp --docroot=webroot --database=postgres:16 --php-version=8.1
+  ddev composer create --prefer-dist --no-interaction cakephp/app:~5.0
+
+  # Ensure the database is set to Postgres
+  sed -i 's/^\(export DATABASE_URL=\)"[^"]*"/\1"postgres:\/\/db:db@db:5432\/db?encoding=utf8"/' config/.env
+  sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="postgres://db:db@db:5432/db?encoding=utf8"|' config/.env
+
+  # Install cypress-cake by setting the preferred path and installing it from there.
+  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
+  composer require tyler36/cypress-cake --ignore-platform-reqs
+
+  # Copy additional settings for PHPunit environment
+  cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
+  ddev cake plugin load Tyler36/CypressCake
+
+  # Run PHPunit tests
+  ddev exec vendor/bin/phpunit
+}
+
+@test "headless cypress" {
   set -eu -o pipefail
 
   cd ${TESTDIR}

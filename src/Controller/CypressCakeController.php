@@ -68,11 +68,22 @@ class CypressCakeController extends AppController
             throw new InvalidArgumentException("DB backup file not found: '{$filename}'");
         }
 
-        $query = file_get_contents($filename);
-        if ($query) {
-            /** @var \Cake\Database\Connection $connection */
-            $connection = ConnectionManager::get('default');
-            $connection->execute($query);
+        $sql = file_get_contents($filename);
+        if (!$sql) {
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody($this->encodeBody(['data' => true]));
+        }
+
+        /** @var \Cake\Database\Connection $connection */
+        $connection = ConnectionManager::get('default');
+        if (self::isPostgres($connection)) {
+            $db = $connection->config()['host'];
+            `psql $db < $filename`;
+        }
+
+        if (!self::isPostgres($connection)) {
+            $connection->execute($sql);
         }
 
         return $this->response

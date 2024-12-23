@@ -31,14 +31,29 @@ trait DatabaseHelperTrait
             return;
         }
 
-        // Disable foreign key checks
-        $connection->execute('SET FOREIGN_KEY_CHECKS = 0;');
+        if (!self::isPostgres($connection)) {
+            // Disable foreign key checks
+            $connection->execute('SET FOREIGN_KEY_CHECKS = 0;');
+        }
 
         foreach ($tables as $table) {
             $connection->execute("TRUNCATE TABLE $table");
         }
 
-        // Re-enable foreign key checks
-        $connection->execute('SET FOREIGN_KEY_CHECKS = 1;');
+
+        if (!self::isPostgres($connection)) {
+            // Re-enable foreign key checks
+            $connection->execute('SET FOREIGN_KEY_CHECKS = 1;');
+        }
+    }
+
+    /**
+     * Check if connection is Postgres
+     *
+     * @return bool
+     */
+    private static function isPostgres($connection): bool
+    {
+        return str_contains($connection->config()['driver'], 'Postgres');
     }
 }
