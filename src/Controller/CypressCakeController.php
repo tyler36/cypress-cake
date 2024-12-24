@@ -16,6 +16,17 @@ use Tyler36\CypressCake\DatabaseHelperTrait;
 class CypressCakeController extends AppController
 {
     use DatabaseHelperTrait;
+    /**
+     * @inheritDoc
+     */
+    public function initialize(): void
+    {
+        // Disable components for API access.
+        $this->noFormProtectionComponent = true;
+        $this->noAuthenticationComponent = true;
+
+        parent::initialize();
+    }
 
     /**
      * @param \Cake\Event\EventInterface<\Cake\Controller\Controller> $event An Event instance
