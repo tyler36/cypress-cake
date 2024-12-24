@@ -61,6 +61,7 @@ Cypress.Commands.add('getCsrfToken', (params) => {
     .request({
       method: 'GET',
       url: '/cypress/csrf-token', // Use any page that returns a CSRF token
+      log: false,
     })
     .then((response) => response.body.csrfToken)
 })
