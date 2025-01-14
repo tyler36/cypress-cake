@@ -119,7 +119,7 @@ class CypressCakeController extends AppController
                 ->withStringBody($this->encodeBody(['error' => "Factory does NOT exist: $factory"]));
         }
 
-        $model = $factory::make($data['attributes'] ?? [])->persist();
+        $model = $factory::make($data['attributes'] ?? [])->disablePrimaryKeyOffset()->persist();
 
         return $this->response
             ->withType('application/json')
