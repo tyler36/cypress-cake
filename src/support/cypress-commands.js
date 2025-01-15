@@ -27,7 +27,6 @@ Cypress.Commands.add('clearDatabase', (params) => {
       body: params,
       log: true,
     })
-    .its('body', { log: false })
 })
 
 /**
@@ -49,7 +48,6 @@ Cypress.Commands.add('importDatabase', (filename) => {
           'X-CSRF-Token': csrfToken,
         },
       })
-      .its('body', { log: false })
   })
 })
 
