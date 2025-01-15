@@ -45,6 +45,11 @@ trait DatabaseHelperTrait
             // Re-enable foreign key checks
             $connection->execute('SET FOREIGN_KEY_CHECKS = 1;');
         }
+
+        if (self::isPostgres($connection)) {
+            // Reset auto-generated sequences
+            $connection->execute("ALTER SEQUENCE {$table}_id_seq RESTART WITH 1;");
+        }
     }
 
     /**
