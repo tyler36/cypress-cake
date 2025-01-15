@@ -107,6 +107,7 @@ setupCakePhp() {
   setupCakePhp
 
   # Copy additional settings for PHPunit environment
+  sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="mysql://db:db@db/db"|' config/.env
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
   ddev cake migrations migrate
 
