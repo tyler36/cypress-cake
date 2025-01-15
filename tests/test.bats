@@ -107,17 +107,16 @@ setupCakePhp() {
   setupCakePhp
 
   # Copy additional settings for PHPunit environment
+  sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="mysql://db:db@db/db"|' config/.env
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
   ddev cake migrations migrate
 
   # Install cypress-cake by setting the preferred path and installing it from there.
   composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
   composer require tyler36/cypress-cake
-
-  # Copy additional settings for PHPunit environment
-  cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
   ddev cake plugin load Tyler36/CypressCake
 
+  # Install Cypress-included
   ddev addon get tyler36/ddev-cypress
   ddev restart
 
