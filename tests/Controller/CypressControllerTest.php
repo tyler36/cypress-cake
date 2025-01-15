@@ -7,6 +7,7 @@ use App\Test\Factory\UserFactory;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use CakephpTestSuiteLight\Fixture\TruncateDirtyTables;
 use InvalidArgumentException;
 use Tyler36\CypressCake\DatabaseHelperTrait;
 
@@ -17,6 +18,7 @@ class CypressControllerTest extends TestCase
 {
     use DatabaseHelperTrait;
     use IntegrationTestTrait;
+    use TruncateDirtyTables;
 
     /**
      * Test setup
@@ -24,8 +26,6 @@ class CypressControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        self::truncateAllTables();
     }
 
     public function test_it_clears_the_database(): void
