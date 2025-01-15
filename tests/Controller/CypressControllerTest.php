@@ -133,6 +133,22 @@ SQL;
         $this->assertNotNull($user->id);
     }
 
+    public function test_sql_autogenerates_primary_keys(): void
+    {
+        $users = TableRegistry::getTableLocator()->get('Users');
+        $this->assertCount(0, $users->find());
+
+        $this->enableCsrfToken();
+        $this->post('/cypress/create', [
+          'factory' => 'User',
+        ]);
+        $this->assertResponseOk();
+
+        $this->assertCount(1, $users->find());
+        $user = json_decode($this->_getBodyAsString())->data;
+        $this->assertEquals(1, $user->id);
+    }
+
     public function test_it_can_create_a_new_user_with_attributes(): void
     {
         $users = TableRegistry::getTableLocator()->get('Users');
