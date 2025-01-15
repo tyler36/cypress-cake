@@ -36,7 +36,8 @@ class CypressControllerTest extends TestCase
         $this->assertCount(1, $users->find());
 
         // Clear the database.
-        $this->get('/cypress/clear-database');
+        $this->enableCsrfToken();
+        $this->post('/cypress/clear-database');
         $this->assertResponseOk();
         $this->assertCount(0, $users->find());
 

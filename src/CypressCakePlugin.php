@@ -42,7 +42,7 @@ class CypressCakePlugin extends BasePlugin
             'Tyler36/CypressCake',
             ['path' => '/cypress'],
             function (RouteBuilder $builder): void {
-                $builder->get(
+                $builder->post(
                     '/clear-database',
                     ['controller' => 'CypressCake','action' => 'clearDatabase'],
                     'cypress-cake.clear-database'
