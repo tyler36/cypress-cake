@@ -30,12 +30,12 @@ class CypressControllerTest extends TestCase
 
     public function test_it_clears_the_database(): void
     {
-      // Make sure we have at least 1 entity in the database.
+        // Make sure we have at least 1 entity in the database.
         UserFactory::make()->persist();
         $users = TableRegistry::getTableLocator()->get('Users');
         $this->assertCount(1, $users->find());
 
-      // Clear the database.
+        // Clear the database.
         $this->get('/cypress/clear-database');
         $this->assertResponseOk();
         $this->assertCount(0, $users->find());
