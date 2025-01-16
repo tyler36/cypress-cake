@@ -16,9 +16,9 @@ This add-on adds some helper files for working with Cypress and CakePHP.
 - This plugin injects a CSRF token into POST requests made to `cypress-cake` endpoints.
 - This plugin bypasses `Authentication` on `cypress-cake` endpoints.
 
-> !note:
+> [!IMPORTANT]
 > This plugin exposes an API to work with the database.
-> It is recommend for local development only.
+> It is recommend for local development only. Do not use in production!
 
 ## Installation
 
