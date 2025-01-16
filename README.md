@@ -51,7 +51,7 @@ This add-on adds some helper files for working with Cypress and CakePHP.
 
 ### Clear Database
 
-Use the Cypress command `cy.clearDatabase()` to clear all data from database
+Use the Cypress command `cy.clearDatabase()` to clear all data from database.
 
 ```js
 cy.clearDatabase()
@@ -60,7 +60,7 @@ cy.clearDatabase()
 ### Import Database
 
 Use `cy.importDatabase()` to import a SQL file.
-By default, this it will import the value `env('SQL_TESTING_BASE_DUMP')`.
+By default, this it will import a file located at `env('SQL_TESTING_BASE_DUMP')`, relative to the root.
 However, you can provide a path as the first parameter.
 
 ```js
@@ -74,7 +74,7 @@ cy.importDatabase('/tmp/test.sql')
 ### Create An Entity
 
 Use `cy.create('User')` to generate an entity from a configured factory.
-This packages expects to find [vierge-noire/cakephp-fixture-factories](https://github.com/vierge-noire/cakephp-fixture-factories) factories setup. Please the documentation there for creating factories.
+This packages expects to find [vierge-noire/cakephp-fixture-factories](https://github.com/vierge-noire/cakephp-fixture-factories) factories. Please see their documentation for creating factories.
 
 ```php
 cy.create('User')
