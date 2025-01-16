@@ -20,14 +20,17 @@ Cypress.Commands.overwrite('request', (originalFn, ...args) => {
  * cy.clearDatabase()
  */
 Cypress.Commands.add('clearDatabase', (params) => {
-  return cy
-    .request({
-      method: 'GET',
-      url: '/cypress/clear-database',
-      body: params,
-      log: true,
-    })
-    .its('body', { log: false })
+  return cy.getCsrfToken().then((csrfToken) => {
+    return cy
+      .request({
+        method: 'POST',
+        url: '/cypress/clear-database',
+        log: true,
+        headers: {
+          'X-CSRF-Token': csrfToken,
+        },
+      })
+  })
 })
 
 /**

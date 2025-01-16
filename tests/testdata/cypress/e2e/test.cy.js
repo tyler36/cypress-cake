@@ -1,7 +1,7 @@
 describe('Cypress-cake', () => {
   it('manages the database', () => {
     cy.clearDatabase().then((response) => {
-      expect(response.data).to.equal(true)
+      expect(response.body.data).to.equal(true)
     })
     cy.visit('/users')
     cy.get('table').should('not.contain', 'now@example.com')
