@@ -29,7 +29,9 @@ This add-on adds some helper files for working with Cypress and CakePHP.
     ddev cake plugin load Tyler36/CypressCake
     ```
 
-1. Install Cypress if not available. Eg. NPM (`npm require cypress`) or DDEV (`ddev addon get tyler36/ddev-cypress`)
+1. Install Cypress if not available. Eg.
+   - via NPM: `npm require cypress`
+   - via [tyler36/ddev-cypress](https://github.com/tyler36/ddev-cypress): `ddev addon get tyler36/ddev-cypress`
 
 1. Update `cypress/support/commands.js`  to import the helpers
 
