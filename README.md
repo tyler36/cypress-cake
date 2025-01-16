@@ -16,9 +16,9 @@ This add-on adds some helper files for working with Cypress and CakePHP.
 - This plugin injects a CSRF token into POST requests made to `cypress-cake` endpoints.
 - This plugin bypasses `Authentication` on `cypress-cake` endpoints.
 
-> !note:
+> [!IMPORTANT]
 > This plugin exposes an API to work with the database.
-> It is recommend for local development only.
+> It is recommend for local development only. Do not use in production!
 
 ## Installation
 
@@ -29,7 +29,9 @@ This add-on adds some helper files for working with Cypress and CakePHP.
     ddev cake plugin load Tyler36/CypressCake
     ```
 
-1. Install Cypress if not available. Eg. NPM (`npm require cypress`) or DDEV (`ddev addon get tyler36/ddev-cypress`)
+1. Install Cypress if not available. Eg.
+   - via NPM: `npm require cypress`
+   - via [tyler36/ddev-cypress](https://github.com/tyler36/ddev-cypress): `ddev addon get tyler36/ddev-cypress`
 
 1. Update `cypress/support/commands.js`  to import the helpers
 
@@ -49,7 +51,7 @@ This add-on adds some helper files for working with Cypress and CakePHP.
 
 ### Clear Database
 
-Use the Cypress command `cy.clearDatabase()` to clear all data from database
+Use the Cypress command `cy.clearDatabase()` to clear all data from database.
 
 ```js
 cy.clearDatabase()
@@ -58,7 +60,7 @@ cy.clearDatabase()
 ### Import Database
 
 Use `cy.importDatabase()` to import a SQL file.
-By default, this it will import the value `env('SQL_TESTING_BASE_DUMP')`.
+By default, this it will import a file located at `env('SQL_TESTING_BASE_DUMP')`, relative to the root.
 However, you can provide a path as the first parameter.
 
 ```js
@@ -72,7 +74,7 @@ cy.importDatabase('/tmp/test.sql')
 ### Create An Entity
 
 Use `cy.create('User')` to generate an entity from a configured factory.
-This packages expects to find [vierge-noire/cakephp-fixture-factories](https://github.com/vierge-noire/cakephp-fixture-factories) factories setup. Please the documentation there for creating factories.
+This packages expects to find [vierge-noire/cakephp-fixture-factories](https://github.com/vierge-noire/cakephp-fixture-factories) factories. Please see their documentation for creating factories.
 
 ```php
 cy.create('User')
