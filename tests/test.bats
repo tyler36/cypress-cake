@@ -27,6 +27,12 @@ setupCakePhp() {
   ddev composer create --prefer-dist --no-interaction cakephp/app:~5.0
 }
 
+setupCypressCake() {
+  # Install cypress-cake by setting the preferred path and installing it from there.
+  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
+  composer require "tyler36/cypress-cake:@dev" --ignore-platform-reqs
+}
+
 @test "CakePhp5 phpunit with MySQL database" {
   set -eu -o pipefail
 
@@ -36,9 +42,8 @@ setupCakePhp() {
   setupCakePhp
   sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="mysql://db:db@db/db"|' config/.env
 
-  # Install cypress-cake by setting the preferred path and installing it from there.
-  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
-  composer require tyler36/cypress-cake --ignore-platform-reqs
+  # Install cypress-cake
+  setupCypressCake
 
   # Copy additional settings for PHPunit environment
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
@@ -57,9 +62,8 @@ setupCakePhp() {
   ddev config --project-type=cakephp --docroot=webroot --php-version=7.4
   ddev composer create --prefer-dist --no-interaction cakephp/app:~4.0
 
-  # Install cypress-cake by setting the preferred path and installing it from there.
-  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
-  composer require tyler36/cypress-cake --ignore-platform-reqs
+  # Install cypress-cake
+  setupCypressCake
 
   # Copy additional settings for PHPunit environment
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
@@ -86,9 +90,8 @@ setupCakePhp() {
   sed -i 's/^\(export DATABASE_URL=\)"[^"]*"/\1"postgres:\/\/db:db@db:5432\/db?encoding=utf8"/' config/.env
   sed -i 's|^#export DATABASE_TEST_URL=.*|export DATABASE_TEST_URL="postgres://db:db@db:5432/db?encoding=utf8"|' config/.env
 
-  # Install cypress-cake by setting the preferred path and installing it from there.
-  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
-  composer require tyler36/cypress-cake --ignore-platform-reqs
+  # Install cypress-cake
+  setupCypressCake
 
   # Copy additional settings for PHPunit environment
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
@@ -111,9 +114,8 @@ setupCakePhp() {
   cp "$DIR"/tests/testdata/* ${TESTDIR}/ -r
   ddev cake migrations migrate
 
-  # Install cypress-cake by setting the preferred path and installing it from there.
-  composer config repositories."$(basename "$DIR")" "{\"type\": \"path\", \"url\": \"$DIR\", \"options\": {\"symlink\": false}}" --file composer.json
-  composer require tyler36/cypress-cake
+  # Install cypress-cake
+  setupCypressCake
   ddev cake plugin load Tyler36/CypressCake
 
   # Install Cypress-included
