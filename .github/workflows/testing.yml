@@ -31,3 +31,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           addon_repository: ${{ env.GITHUB_REPOSITORY }}
           addon_ref: ${{ env.GITHUB_REF }}
+
+      - name: '☁️ Archive artifacts'
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: |
+            logs
