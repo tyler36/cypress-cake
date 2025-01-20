@@ -17,6 +17,9 @@ health_checks() {
 teardown() {
   set -eu -o pipefail
 
+  # Copy any logs to a central area
+  cp -rf ${TESTDIR}/logs ${DIR}/logs/
+
   cd ${TESTDIR} || (printf "unable to cd to ${TESTDIR}\n" && exit 1)
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1
   [ "${TESTDIR}" != "" ] && rm -rf ${TESTDIR}
